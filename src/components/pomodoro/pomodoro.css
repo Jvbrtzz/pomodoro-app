@@ -1,0 +1,25 @@
+.pomodoro-timer {
+    text-align: center;
+    padding: 20px;
+}
+
+.timer-display {
+    font-size: 3rem;
+    margin: 20px 0;
+}
+
+.controls button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.sessions {
+    margin-top: 20px;
+}
+.task-inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
