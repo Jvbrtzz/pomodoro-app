@@ -1,13 +1,13 @@
 import React from 'react';
-import { PomodoroScript } from '../../Utils/pomodoro/pomodoroScript';
+import { PomodoroScript } from '../../util/pomodoro/pomodoroScript';
 import './pomodoro.css';
 import Button from '../button/button';
-import { saveToLocalStorage } from '../../Utils/saveLocalStorage';
-import TaskList from '../../Utils/Tasks';
+import { saveToLocalStorage } from '../../util/saveLocalStorage';
+import TaskList from '../../util/Tasks';
 
 export default function PomodoroTimer() {
-    const [name, setName] = React.useState('');
-    const [description, setDescription] = React.useState('');   
+    const [nome, setName] = React.useState('');
+    const [descricao, setDescription] = React.useState('');   
     
     const {
         isActive,
@@ -20,8 +20,8 @@ export default function PomodoroTimer() {
 
     const handleAddTask = (e) => {
         e.preventDefault();
-        if (name.trim() && description.trim()) {
-            saveToLocalStorage({ name, description, timeFormatted });
+        if (nome.trim() && descricao.trim()) {
+            saveToLocalStorage({ nome, descricao, tempo: timeFormatted });
             setName('');
             setDescription('');
         }
@@ -48,7 +48,7 @@ export default function PomodoroTimer() {
                     type="text" 
                     name="Tarefa" 
                     id="task-input" 
-                    value={name}
+                    value={nome}
                     onChange={(e) => setName(e.target.value)}
                 />
                 <label htmlFor="description-input">Description:</label>
@@ -56,7 +56,7 @@ export default function PomodoroTimer() {
                     type="text" 
                     name="Descrição" 
                     id="description-input" 
-                    value={description}
+                    value={descricao}
                     onChange={(e) => setDescription(e.target.value)}
                 />
                 <Button label="Add Task" variant="secondary" type="submit" />

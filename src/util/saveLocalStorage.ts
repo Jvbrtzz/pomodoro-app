@@ -1,6 +1,6 @@
-import { Pomodoro } from '../interfaces/pomodoro';
+import Task from '../interfaces/pomodoro';
 
-export const saveToLocalStorage = (data: Pomodoro): void => {
+export const saveToLocalStorage = (data: Task): void => {
     try {
         const existing = localStorage.getItem('pomodoroData');
         let parsed: Array<any> = [];
@@ -10,7 +10,7 @@ export const saveToLocalStorage = (data: Pomodoro): void => {
             parsed = [];
         }
 
-        const tasks: Pomodoro[] = Array.isArray(parsed) ? (parsed as Pomodoro[]) : (parsed ? [parsed as Pomodoro] : []);
+        const tasks: Task[] = Array.isArray(parsed) ? (parsed as Task[]) : (parsed ? [parsed as Task] : []);
         tasks.push(data);
         localStorage.setItem('pomodoroData', JSON.stringify(tasks));
     } catch (error) {
@@ -18,10 +18,11 @@ export const saveToLocalStorage = (data: Pomodoro): void => {
     }
 };
 
-export const getFromLocalStorage = (): Pomodoro[] | null => {
+export const getFromLocalStorage = (): Task[] | null => {
     try {
         const data = localStorage.getItem('pomodoroData');
-        return data ? JSON.parse(data) : null;
+        if (!data) return [];
+        return JSON.parse(data) as Task[];
     } catch (error) {
         console.error('Erro ao recuperar do localStorage:', error);
         return null;

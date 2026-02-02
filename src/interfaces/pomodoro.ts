@@ -1,4 +1,6 @@
-export interface Pomodoro{
-    name: string;
-    description: string;
+export default interface Task{
+    nome: string;
+    descricao: string;
+    tempo: number;
 }
+
