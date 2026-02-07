@@ -4,7 +4,6 @@ import { User, UserLoginData } from "../interfaces/user"
 export const LOGIN = "LOGIN"
 export const LOGOUT = "LOGOUT"
 
-
 export type AuthAction =
   | { type: typeof LOGIN, payload: UserLoginData }
   | { type: typeof LOGOUT }

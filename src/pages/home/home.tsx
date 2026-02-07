@@ -8,8 +8,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { loginAction, logoutAction } from "../../store/actions";
 import { useDispatch } from "react-redux";
+import { decodeAccessToken, clearAccessToken } from "../../util/decodeAccessToken";
 
 function Home() {
+    console.log("Decoded Access Token:", decodeAccessToken()); // Debugging line
     const dispatch = useDispatch()
     const isAuth = useSelector(
         (state: RootState) => state
@@ -23,6 +25,7 @@ function Home() {
 
     const handleLogout = (e: React.FormEvent) => {
         e.preventDefault()
+        clearAccessToken();
         dispatch(logoutAction())
       }
 

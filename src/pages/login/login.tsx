@@ -4,15 +4,38 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { fetchUser } from "../../http/user.api";
+
 
 export function Login() {
   const dispatch = useDispatch()
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
 
+  const validateLogin = (email: string, senha: string) => {
+    if (email.trim() === "" || senha.trim() === "") {
+      alert("Por favor, preencha todos os campos.");
+      return false;
+    }
+    return true;
+  }
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
-    dispatch(loginAction({ email, senha }))
+    if (validateLogin(email, senha)) {
+     try {
+        fetchUser(email, senha).then(user => {
+          if (user.length > 0) {
+            dispatch(loginAction(user[0]))
+          } else {
+            alert("Credenciais inválidas. Tente novamente.");
+          }
+        })
+        } catch (error) {
+          console.error("Erro durante o login:", error);
+          alert("Ocorreu um erro durante o processo de login. Por favor, tente novamente mais tarde.");
+        }    
+    }
   }
 
   return (
