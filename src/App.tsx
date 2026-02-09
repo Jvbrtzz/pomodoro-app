@@ -4,13 +4,15 @@
   import { RootState } from "./store/store"
   import { Route, Routes, Navigate } from 'react-router-dom';
   import { useSelector } from "react-redux"
+  import { getAccessToken } from './util/decodeAccessToken';
 
 
   function App() {
+    
     const isAuth = useSelector(
       (state: RootState) => state.isAuthenticated
     )
-
+    console.log(isAuth)
     return (
       <Routes>
         <Route

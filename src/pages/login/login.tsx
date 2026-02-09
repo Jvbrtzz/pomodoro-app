@@ -12,6 +12,12 @@ export function Login() {
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
 
+  const isAuth = useSelector(
+    (state: RootState) => state.isAuthenticated
+  )
+
+  console.log(isAuth)
+
   const validateLogin = (email: string, senha: string) => {
     if (email.trim() === "" || senha.trim() === "") {
       alert("Por favor, preencha todos os campos.");
@@ -25,11 +31,9 @@ export function Login() {
     if (validateLogin(email, senha)) {
      try {
         fetchUser(email, senha).then(user => {
-          if (user.length > 0) {
-            dispatch(loginAction(user[0]))
-          } else {
-            alert("Credenciais inválidas. Tente novamente.");
-          }
+          if (user) {
+            dispatch(loginAction(user))
+          } 
         })
         } catch (error) {
           console.error("Erro durante o login:", error);

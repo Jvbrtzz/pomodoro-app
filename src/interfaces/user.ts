@@ -2,7 +2,10 @@
 export type User = {
   name?: string
   email: string
-  senha: string
+  senha?: string
 }
 
-export type UserLoginData = Omit<User, "name" & "senha">
+export type UserLoginData ={
+  accessToken: string
+}
+

@@ -1,8 +1,12 @@
 import {jwtDecode} from "jwt-decode";
 
+export function getAccessToken(): any{
+  return localStorage.getItem("accessToken");
+}
+
 export function decodeAccessToken() {
-  const accessToken = localStorage.getItem("accessToken");
-  const decodedToken = accessToken ? (jwtDecode(accessToken) as { user_id?: number }) : {};
+  const accessToken = getAccessToken();
+  const decodedToken = accessToken ? (jwtDecode(accessToken) as { user_id?: number, username?: string }) : {};
     return decodedToken;
 }
 
