@@ -1,31 +1,23 @@
-  import React from 'react';
-  import Home from './pages/home/home';
-  import { Login } from './pages/login/login';
-  import { RootState } from "./store/store"
-  import { Route, Routes, Navigate } from 'react-router-dom';
-  import { useSelector } from "react-redux"
+import Home from './pages/home/home'
+import { Login } from './pages/login/login'
+import { Route, Routes, Navigate } from 'react-router-dom'
 
+function App() {
+  return (
+    <Routes>
+      <Route
+        path="/home"
+        element={<Home />}
+      />
+      
+      <Route
+        path="/login"
+        element={<Login />}
+      />
 
-  function App() {
-    const isAuth = useSelector(
-      (state: RootState) => state.isAuthenticated
-    )
+      <Route path="*" element={<Navigate to="/login" />} />
+    </Routes>
+  )
+}
 
-    return (
-      <Routes>
-        <Route
-          path="/login"
-          element={isAuth ? <Navigate to="/home" /> : <Login />}
-        />
-
-        <Route
-          path="/home"
-          element={isAuth ? <Home /> : <Navigate to="/login" />}
-        />
-
-        <Route path="*" element={<Navigate to="/login" />} />
-      </Routes>
-    )
-  }
-
-  export default App;
+export default App

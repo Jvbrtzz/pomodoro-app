@@ -1,15 +1,22 @@
 import {jwtDecode} from "jwt-decode";
+import { User, UserInfo } from "../interfaces/user";
 
-export function decodeAccessToken() {
-  const accessToken = localStorage.getItem("accessToken");
-  const decodedToken = accessToken ? (jwtDecode(accessToken) as { user_id?: number }) : {};
+export function getAccessToken(): any{
+  return localStorage.getItem("accessToken");
+}
+
+export function decodeAccessToken(): UserInfo | null {
+  const accessToken = getAccessToken();
+  const decodedToken = accessToken ? (jwtDecode(accessToken) as UserInfo): null;
     return decodedToken;
 }
 
 export function setAccessToken(token: string) {
+  window.dispatchEvent(new Event("auth-change"))
   localStorage.setItem("accessToken", token);
 }
 
 export function clearAccessToken() {
+  window.dispatchEvent(new Event("auth-change"))
   localStorage.removeItem("accessToken");
 }

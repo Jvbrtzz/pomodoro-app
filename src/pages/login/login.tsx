@@ -1,16 +1,26 @@
 import "./login.css";
-import { loginAction, logoutAction } from "../../store/actions";
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../../store/store";
+import { loginAction } from "../../store/actions";
+import { useDispatch,  } from "react-redux"
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { fetchUser } from "../../http/user.api";
-
+import { decodeAccessToken } from "../../util/decodeAccessToken";
 
 export function Login() {
+  const navigate = useNavigate();
   const dispatch = useDispatch()
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
+
+    useEffect(() => {
+      const decoded = decodeAccessToken()
+  
+          if (decoded) {
+          navigate('/home')
+          return
+          }
+
+    }, [navigate])  
 
   const validateLogin = (email: string, senha: string) => {
     if (email.trim() === "" || senha.trim() === "") {
@@ -25,11 +35,10 @@ export function Login() {
     if (validateLogin(email, senha)) {
      try {
         fetchUser(email, senha).then(user => {
-          if (user.length > 0) {
-            dispatch(loginAction(user[0]))
-          } else {
-            alert("Credenciais inválidas. Tente novamente.");
-          }
+          if (user) {
+            navigate('/home')
+            dispatch(loginAction(user))
+          } 
         })
         } catch (error) {
           console.error("Erro durante o login:", error);
