@@ -1,22 +1,26 @@
 import "./login.css";
-import { loginAction, logoutAction } from "../../store/actions";
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../../store/store";
+import { loginAction } from "../../store/actions";
+import { useDispatch,  } from "react-redux"
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { fetchUser } from "../../http/user.api";
-
+import { decodeAccessToken } from "../../util/decodeAccessToken";
 
 export function Login() {
+  const navigate = useNavigate();
   const dispatch = useDispatch()
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
 
-  const isAuth = useSelector(
-    (state: RootState) => state.isAuthenticated
-  )
+    useEffect(() => {
+      const decoded = decodeAccessToken()
+  
+          if (decoded) {
+          navigate('/home')
+          return
+          }
 
-  console.log(isAuth)
+    }, [navigate])  
 
   const validateLogin = (email: string, senha: string) => {
     if (email.trim() === "" || senha.trim() === "") {
@@ -32,6 +36,7 @@ export function Login() {
      try {
         fetchUser(email, senha).then(user => {
           if (user) {
+            navigate('/home')
             dispatch(loginAction(user))
           } 
         })
