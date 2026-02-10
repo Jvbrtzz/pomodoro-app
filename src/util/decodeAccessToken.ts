@@ -12,11 +12,9 @@ export function decodeAccessToken(): UserInfo | null {
 }
 
 export function setAccessToken(token: string) {
-  window.dispatchEvent(new Event("auth-change"))
   localStorage.setItem("accessToken", token);
 }
 
 export function clearAccessToken() {
-  window.dispatchEvent(new Event("auth-change"))
   localStorage.removeItem("accessToken");
 }

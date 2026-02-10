@@ -18,9 +18,8 @@ async function fetchUser(email: string, senha: string): Promise<UserLoginData | 
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 401) {
-        alert("Credenciais inválidas. Tente novamente.");
+        throw new Error("Failed to fetch tasks");
       } else {
-        alert("Erro ao realizar login.");
         console.error(error.response);
       }
     } else {
