@@ -33,8 +33,7 @@ function Home() {
         navigate('/login')
     }
 
-    return (
-        <form>
+    return (        
         <div className="home-container">
         <h2 className="welcome-message">Bem-vindo, {userInfo?.name || "Usuário"}!</h2>
         <h1 className="home-title">Pomodoro App</h1>
@@ -45,8 +44,7 @@ function Home() {
         <Button variant="secondary" type="submit" onClick={handleLogout} disabled={false} label="Logout"/>
 
         <TaskList/>
-        </div>  
-        </form>   
+        </div>            
     );
     }
 export default Home;

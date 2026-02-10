@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { fetchTasks } from "../http/tasks.api";
 import  Task from "../interfaces/pomodoro";
+import { decodeAccessToken } from "./decodeAccessToken";
 
 export default function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
+  let userId = decodeAccessToken()?.user_id
 
   useEffect(() => {
     async function loadTasks() {
       try {
         setLoading(true);
-        const data = await fetchTasks();
+        const data = await fetchTasks(userId);
         setTasks(data || []);
       } catch (error) {
         console.error("Erro ao buscar tasks", error);
