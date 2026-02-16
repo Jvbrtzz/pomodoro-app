@@ -47,6 +47,10 @@ export function Login() {
     }
   }
 
+  const handleRegister =  () :void => {
+    navigate('/register')
+  }
+
   return (
     <div className="login-page">
       <section className="login-card">
@@ -104,8 +108,8 @@ export function Login() {
           <button className="login-button" type="submit">
             Entrar na conta
           </button>
-          <p>cadastre-se se não possuir um login!</p>
         </form>
+        <button className="register-button" onClick={handleRegister}>cadastre-se se não possuir um login!</button>
       </section>
     </div>
   )

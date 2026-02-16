@@ -216,11 +216,30 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
+.register-button {
+  padding: 0.9rem 1rem;
+  border-radius: 16px;
+  border: none;
+  background: var(--login-muted);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
 .login-button:hover {
   transform: translateY(-1px);
   background: var(--login-accent-dark);
   box-shadow: 0 12px 24px rgba(217, 119, 87, 0.3);
 }
+
+.register-button:hover {
+  transform: translateY(-1px);
+  background: var(--login-ink);
+  box-shadow: 0 12px 24px rgba(217, 119, 87, 0.3);
+}
+
 
 .login-divider {
   display: flex;
