@@ -1,5 +1,6 @@
 import Home from './pages/home/home'
 import { Login } from './pages/login/login'
+import Admin from './pages/admin/admin'
 import { Route, Routes, Navigate } from 'react-router-dom'
 
 function App() {
@@ -14,6 +15,13 @@ function App() {
         path="/login"
         element={<Login />}
       />
+
+            
+      <Route
+        path="/admin"
+        element={<Admin />}
+      />
+
 
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>

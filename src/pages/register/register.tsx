@@ -16,10 +16,11 @@ export function Login() {
   const [senha, setSenha] = useState("")
   const [error, setError] = useState<string | null>(null)
   
+  console.log(userType)
   useEffect(() => {
     if(getURLParams('motivo') == 'Acesso_negado'){
       clearAccessToken()
-      setError('Você não possui acesso à esta área')
+      alert('acesso negado vacilao');
     }
     if (decodeAccessToken()) {
       navigate('/home')
@@ -39,6 +40,7 @@ export function Login() {
       const user = await fetchUser(email, senha)
       if (user) {
         dispatch(loginAction(user))
+        console.log(user)
         if(userType == "user") navigate('/home') 
         else if (userType == "admin") navigate('/admin') 
       } 
@@ -104,7 +106,6 @@ export function Login() {
           <button className="login-button" type="submit">
             Entrar na conta
           </button>
-          <p>cadastre-se se não possuir um login!</p>
         </form>
       </section>
     </div>
