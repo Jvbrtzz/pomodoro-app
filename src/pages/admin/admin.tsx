@@ -1,7 +1,7 @@
 import Button from "../../components/button/button";
 import Modal from "../../components/modal/modal";
 import { useEffect, useState } from "react";
-import "./home.css";
+import "./admin.css";
 import TaskList from "../../util/Tasks";
 import { logoutAction } from "../../store/actions";
 import { useDispatch } from "react-redux";
@@ -9,7 +9,7 @@ import { decodeAccessToken, clearAccessToken, getAccessToken } from "../../util/
 import { useNavigate } from "react-router-dom";
 import { UserInfo } from "../../interfaces/user";
 
-function Home() {
+function Admin() {
     const navigate = useNavigate();
     const dispatch = useDispatch()     
 
@@ -18,10 +18,13 @@ function Home() {
 
     useEffect(() => {
         const decoded = decodeAccessToken()
-    
         if (!decoded) {
-        navigate('/login')
-        return
+            navigate('/login')
+            return
+        }
+        else if(decoded.user_type == 'user'){
+            navigate('/login?motivo=Acesso_negado')
+            return
         }
 
         setUserInfo(decoded)
@@ -47,4 +50,4 @@ function Home() {
         </div>            
     );
     }
-export default Home;
+export default Admin;

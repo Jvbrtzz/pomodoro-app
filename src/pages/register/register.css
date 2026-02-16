@@ -35,9 +35,6 @@
   gap: 2.5rem;
   align-items: stretch;
 }
-.form-error{
-  color: red;
-}
 
 .login-hero {
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.86), rgba(255, 240, 228, 0.6));
