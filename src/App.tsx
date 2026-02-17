@@ -2,6 +2,7 @@ import Home from './pages/home/home'
 import { Login } from './pages/login/login'
 import Admin from './pages/admin/admin'
 import { Route, Routes, Navigate } from 'react-router-dom'
+import { Register } from './pages/register/register'
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
         element={<Admin />}
       />
 
+      <Route
+        path="/register"
+        element={<Register />}
+      />
 
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>

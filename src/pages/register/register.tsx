@@ -1,4 +1,4 @@
-import "./login.css";
+import "./register.css";
 import { loginAction } from "../../store/actions";
 import { useDispatch,  } from "react-redux"
 import { useNavigate } from "react-router-dom";
@@ -7,16 +7,17 @@ import { fetchUser } from "../../http/user.api";
 import { decodeAccessToken, clearAccessToken } from "../../util/decodeAccessToken";
 import { getURLParams } from "../../util/urlParams";
 
-export function Login() {
+export function Register() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const [nome, setNome] = useState("")
   const [email, setEmail] = useState("")
   const [userType, setUser] = useState("user")
   const [senha, setSenha] = useState("")
+  const [confirmarSenha, setConfirmarSenha] = useState("")
   const [error, setError] = useState<string | null>(null)
   
-  console.log(userType)
   useEffect(() => {
     if(getURLParams('motivo') == 'Acesso_negado'){
       clearAccessToken()
@@ -31,8 +32,13 @@ export function Login() {
     e.preventDefault()
     setError(null)
 
-    if (!email.trim() || !senha.trim()) {
+    if (!nome.trim() || !email.trim() || !senha.trim() || !confirmarSenha.trim()) {
       setError("Preencha todos os campos.")
+      return
+    }
+
+    if (senha !== confirmarSenha) {
+      setError("As senhas nao coincidem.")
       return
     }
     
@@ -84,6 +90,15 @@ export function Login() {
 
         <form className="login-form" onSubmit={handleLogin}>
           <label className="field">
+            <span>Nome</span>
+            <input
+              type="text"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+            />
+          </label>
+
+          <label className="field">
             <span>E-mail</span>
             <input
               type="email"
@@ -98,6 +113,15 @@ export function Login() {
               type="password"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
+            />
+          </label>
+
+          <label className="field">
+            <span>Confirmar senha</span>
+            <input
+              type="password"
+              value={confirmarSenha}
+              onChange={(e) => setConfirmarSenha(e.target.value)}
             />
           </label>
 
