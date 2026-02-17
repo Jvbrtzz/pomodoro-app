@@ -26,7 +26,7 @@ export function Login() {
     }
   }, [navigate])
   
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) :Promise<void>  => {
     e.preventDefault()
     setError(null)
 
@@ -41,9 +41,13 @@ export function Login() {
         dispatch(loginAction(user))
         if(userType == "user") navigate('/home') 
         else if (userType == "admin") navigate('/admin') 
-      } 
-    } catch {
-      setError("E-mail ou senha inválidos.")
+      }
+    } catch(error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Erro desconhecido");
+      }
     }
   }
 
