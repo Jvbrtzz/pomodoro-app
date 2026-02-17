@@ -1,15 +1,10 @@
 import "./register.css";
-import { loginAction } from "../../store/actions";
-import { useDispatch,  } from "react-redux"
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { fetchUser } from "../../http/user.api";
-import { decodeAccessToken, clearAccessToken } from "../../util/decodeAccessToken";
-import { getURLParams } from "../../util/urlParams";
+import { useState } from "react";
+import { createUser } from "../../http/user.api";
 
 export function Register() {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
 
   const [nome, setNome] = useState("")
   const [email, setEmail] = useState("")
@@ -18,17 +13,7 @@ export function Register() {
   const [confirmarSenha, setConfirmarSenha] = useState("")
   const [error, setError] = useState<string | null>(null)
   
-  useEffect(() => {
-    if(getURLParams('motivo') == 'Acesso_negado'){
-      clearAccessToken()
-      alert('acesso negado vacilao');
-    }
-    if (decodeAccessToken()) {
-      navigate('/home')
-    }
-  }, [navigate])
-  
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleRegister =  async (e: React.FormEvent) :Promise<void>  => {
     e.preventDefault()
     setError(null)
 
@@ -43,16 +28,21 @@ export function Register() {
     }
     
     try {
-      const user = await fetchUser(email, senha)
+      const user = await createUser(nome, email, senha, userType)
       if (user) {
-        dispatch(loginAction(user))
-        console.log(user)
-        if(userType == "user") navigate('/home') 
-        else if (userType == "admin") navigate('/admin') 
-      } 
-    } catch {
-      setError("E-mail ou senha inválidos.")
+        navigate('/login')         
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Erro desconhecido");
+      }
     }
+  }
+
+  const handleLogin =  () :void => {
+    navigate('/login')
   }
 
   return (
@@ -88,7 +78,7 @@ export function Register() {
       </label>
     </div>
 
-        <form className="login-form" onSubmit={handleLogin}>
+        <form className="login-form" onSubmit={handleRegister}>
           <label className="field">
             <span>Nome</span>
             <input
@@ -131,6 +121,8 @@ export function Register() {
             Entrar na conta
           </button>
         </form>
+          <button className="register-button" onClick={handleLogin}>Voltar pra tela de login</button>
+
       </section>
     </div>
   )
