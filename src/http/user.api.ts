@@ -29,7 +29,7 @@ async function fetchUser(email: string, senha: string): Promise<UserLoginData | 
   }
 }
 
-async function createUser(nome: string, email: string,  senha: string, user_type: string): Promise<Boolean | void> {
+async function createUser(nome: string, email: string,  senha: string, user_type: string): Promise<Number | void> {
     
     try {
         const api = await getApiInstance();
@@ -40,9 +40,7 @@ async function createUser(nome: string, email: string,  senha: string, user_type
         user_type
         });   
 
-        if(resultapi.status === 201){
-            return true
-        } 
+      return resultapi.status;
 
     } catch (error) {
 

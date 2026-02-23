@@ -29,7 +29,7 @@ export function Register() {
     
     try {
       const user = await createUser(nome, email, senha, userType)
-      if (user) {
+      if (user === process.env.REACT_APP_STATUS_OK) {
         navigate('/login')         
       }
     } catch (error) {
@@ -118,7 +118,7 @@ export function Register() {
           {error && <p className="form-error">{error}</p>}
 
           <button className="login-button" type="submit">
-            Entrar na conta
+            Registrar conta
           </button>
         </form>
           <button className="register-button" onClick={handleLogin}>Voltar pra tela de login</button>
