@@ -1,5 +1,5 @@
 import getApiInstance from "./api";
-import { UserLoginData } from "../interfaces/user";
+import { UserLoginData, UsersList } from "../interfaces/user";
 import { setAccessToken } from "../util/decodeAccessToken";
 import axios from "axios";
 
@@ -67,4 +67,33 @@ async function createUser(nome: string, email: string,  senha: string, user_type
 
 }
 
-export { fetchUser, createUser };
+async function fetchAllUsers( accessToken: string ): Promise<UsersList | void> {
+  try {
+    const api = await getApiInstance();
+    const resultapi = await api.get(
+      "auth/getusers",
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }
+    );
+
+    return resultapi.data as UsersList;
+
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 401) {
+        throw new Error("Não autorizado");
+      } else {
+        console.error(error.response?.data);
+        throw new Error("Erro inesperado, tente novamente mais tarde");
+      }
+    } else {
+      console.error(error);
+      throw new Error("Erro inesperado");
+    }
+  }
+}
+
+export { fetchUser, createUser, fetchAllUsers };

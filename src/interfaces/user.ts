@@ -17,3 +17,5 @@ export type UserInfo = {
   iat: number
   exp: number
 }
+
+export type UsersList = Omit<User, 'senha'>
