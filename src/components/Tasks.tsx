@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchTasks } from "../http/tasks.api";
 import  Task from "../interfaces/pomodoro";
-import { decodeAccessToken } from "./decodeAccessToken";
+import { decodeAccessToken } from "../util/decodeAccessToken";
 
 export default function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);

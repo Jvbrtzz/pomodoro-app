@@ -2,7 +2,7 @@ import Button from "../../components/button/button";
 import Modal from "../../components/modal/modal";
 import { useEffect, useState } from "react";
 import "./home.css";
-import TaskList from "../../util/Tasks";
+import TaskList from "../../components/Tasks";
 import { logoutAction } from "../../store/actions";
 import { useDispatch } from "react-redux";
 import { decodeAccessToken, clearAccessToken, getAccessToken } from "../../util/decodeAccessToken";
