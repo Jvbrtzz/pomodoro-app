@@ -3,7 +3,6 @@ import { PomodoroScript } from '../../util/pomodoro/pomodoroScript';
 import './pomodoro.css';
 import Button from '../button/button';
 import { saveToLocalStorage } from '../../util/saveLocalStorage';
-import TaskList from '../Tasks';
 
 export default function PomodoroTimer() {
     const [nome, setName] = React.useState('');

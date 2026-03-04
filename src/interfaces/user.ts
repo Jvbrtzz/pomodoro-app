@@ -1,5 +1,5 @@
 export type User = {
-  name?: string
+  nome?: string
   email: string
   senha?: string
   user_type: string
@@ -18,4 +18,4 @@ export type UserInfo = {
   exp: number
 }
 
-export type UsersList = Omit<User, 'senha'>
+export interface UsersList extends Omit<User, 'senha'> {}

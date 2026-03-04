@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
-import { fetchTasks } from "../http/tasks.api";
-import  Task from "../interfaces/pomodoro";
-import { decodeAccessToken } from "../util/decodeAccessToken";
+import { fetchAllUsers } from "../http/user.api";
+import  { UsersList } from "../interfaces/user";
+import { getAccessToken } from "../util/decodeAccessToken";
+import "./User.css";
 
-export default function TaskList() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+export default function UserList() {
+  let token = getAccessToken() || "";
+  const [users, setUsers] = useState<UsersList[]>([]);
   const [loading, setLoading] = useState(true);
-  let userId = decodeAccessToken()?.user_id
 
   useEffect(() => {
     async function loadTasks() {
       try {
         setLoading(true);
-        const data = await fetchTasks(userId);
-        setTasks(data || []);
+        const data = await fetchAllUsers(token || "");
+        console.log(data);
+        setUsers(Array.isArray(data) ? data : []);
       } catch (error) {
-        console.error("Erro ao buscar tasks", error);
-        setTasks([]);
+        console.error("Erro ao buscar users", error);
+        setUsers([]);
       } finally {
         setLoading(false);
       }
@@ -26,24 +28,30 @@ export default function TaskList() {
   }, []);
 
   if (loading) {
-    return <p>Loading tasks...</p>;
+    return <p className="user-list-loading">Carregando usuarios...</p>;
   }
 
   return (
-    <div className="task-list-container">
-      <h3>Saved Tasks</h3>
+    <section className="user-list">
+      <header className="user-list__header">
+        <p className="user-list__eyebrow">Painel admin</p>
+        <h3>Usuarios cadastrados</h3>
+      </header>
 
-      {tasks.length === 0 && <p>No tasks saved.</p>}
+      {users.length === 0 && <p className="user-list__empty">Nenhum usuario cadastrado.</p>}
 
-      <ul>
-        {tasks.map((task) => (
-          <li>
-            <strong>Task:</strong> {task.nome} <br />
-            <strong>Description:</strong> {task.descricao} <br />
-            <time>Tempo: {task.tempo}</time>
+      <ul className="user-list__grid">
+        {users.map((user) => (
+          <li className="user-list__item" key={`${user.email}-${user.nome}`}>
+            <p><strong>Usuario:</strong> {user.nome}</p>
+            <p><strong>E-mail:</strong> {user.email}</p>
+            <p className="user-list__role">
+              <span>Tipo</span>
+              <time>{user.user_type}</time>
+            </p>
           </li>
         ))}
       </ul>
-    </div>
+    </section>
   );
 }
