@@ -3,12 +3,11 @@ import { Login } from './pages/login/login'
 import Admin from './pages/admin/admin'
 import { Route, Routes, Navigate } from 'react-router-dom'
 import { Register } from './pages/register/register'
-import Header from './components/header/header'
 
 function App() {
   return (
     <>
-    <Header/>    <Routes>
+    <Routes>
       <Route
         path="/home"
         element={<Home />}
@@ -32,6 +31,7 @@ function App() {
 
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
+    
     </>
   )
 }

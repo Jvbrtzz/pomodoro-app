@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { decodeAccessToken, clearAccessToken, getAccessToken } from "../../util/decodeAccessToken";
 import { useNavigate } from "react-router-dom";
 import { UserInfo } from "../../interfaces/user";
+import Header from "../../components/header/header";
 
 function Home() {
     const navigate = useNavigate();
@@ -33,18 +34,17 @@ function Home() {
         navigate('/login')
     }
 
-    return (        
-        <div className="home-container">
-        <h2 className="welcome-message">Bem-vindo, {userInfo?.name || "Usuário"}!</h2>
-        <h1 className="home-title">Pomodoro App</h1>
-        <div className="actions">
-        <Button variant="primary" type="submit" onClick={() => setOpen(true)} disabled={false} label="Start Pomodoro"/>
-        </div>  
-        <Modal isOpen={open} onClose={() => setOpen(false)}/>
-        <Button variant="secondary" type="submit" onClick={handleLogout} disabled={false} label="Logout"/>
-
+    return (  
+        <>     
+        <Header rightContent={userInfo?.name || "Usuário" } handleLogout={handleLogout} subtitle="Organize seu tempo de forma eficiente"/>
+            <div className="home-container">
+            <div className="actions">
+            <Button variant="primary" type="submit" onClick={() => setOpen(true)} disabled={false} label="Start Pomodoro"/>
+            </div>  
+            <Modal isOpen={open} onClose={() => setOpen(false)}/>
         <TaskList/>
-        </div>            
+        </div>   
+        </>          
     );
     }
 export default Home;
