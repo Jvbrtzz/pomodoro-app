@@ -1,14 +1,13 @@
 import Button from "../../components/button/button";
-import Modal from "../../components/modal/modal";
 import { useEffect, useState } from "react";
 import "./admin.css";
 import UserList from "../../components/User";
 import { logoutAction } from "../../store/actions";
 import { useDispatch } from "react-redux";
-import { decodeAccessToken, clearAccessToken, getAccessToken } from "../../util/decodeAccessToken";
+import { decodeAccessToken, clearAccessToken } from "../../util/decodeAccessToken";
 import { useNavigate } from "react-router-dom";
 import { UserInfo } from "../../interfaces/user";
-import { fetchAllUsers } from "../../http/user.api";
+import Header from "../../components/header/header";
 
 function Admin() {
     const navigate = useNavigate();
@@ -37,13 +36,14 @@ function Admin() {
     }
 
 
-    return (        
+    return (     
+         <>
+        <Header rightContent={userInfo?.name} handleLogout={handleLogout} subtitle="Área administrativa"/>    
         <div className="home-container">
-        <h2 className="welcome-message">Bem-vindo, {userInfo?.name || "Usuário"}!</h2>
-        <h1 className="home-title">Área Administrativa</h1>
-        <Button variant="secondary" type="submit" onClick={handleLogout} disabled={false} label="Logout"/>
         <UserList/>
-        </div>            
+        </div>  
+        </>  
+         
     );
     }
 export default Admin;

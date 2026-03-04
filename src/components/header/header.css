@@ -1,5 +1,7 @@
 .app-header {
-  width: min(1100px, 100%);
+  
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  width: 98%;
   margin: 0 auto 1rem;
   padding: 1rem 1.25rem;
   display: flex;
