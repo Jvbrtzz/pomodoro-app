@@ -3,10 +3,13 @@ import { fetchAllUsers } from "../http/user.api";
 import  { UsersList } from "../interfaces/user";
 import { getAccessToken } from "../util/decodeAccessToken";
 import "./User.css";
+import getSearch from "../util/getSearch";
+import { get } from "http";
 
 export default function UserList() {
   let token = getAccessToken() || "";
   const [users, setUsers] = useState<UsersList[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -14,7 +17,6 @@ export default function UserList() {
       try {
         setLoading(true);
         const data = await fetchAllUsers(token || "");
-        console.log(data);
         setUsers(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Erro ao buscar users", error);
@@ -25,6 +27,11 @@ export default function UserList() {
     }
 
     loadTasks();
+  }, []);
+  
+  useEffect(() => {
+    console.log(searchTerm);
+    getSearch(searchTerm, token)
   }, []);
 
   if (loading) {
@@ -37,7 +44,7 @@ export default function UserList() {
         <p className="user-list__eyebrow">Painel admin</p>
         <h3>Usuarios cadastrados</h3>
       </header>
-
+      <input type="search" placeholder="Buscar usuarios..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
       {users.length === 0 && <p className="user-list__empty">Nenhum usuario cadastrado.</p>}
 
       <ul className="user-list__grid">

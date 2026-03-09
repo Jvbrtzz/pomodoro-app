@@ -5,7 +5,7 @@ import "./home.css";
 import TaskList from "../../components/Tasks";
 import { logoutAction } from "../../store/actions";
 import { useDispatch } from "react-redux";
-import { decodeAccessToken, clearAccessToken, getAccessToken } from "../../util/decodeAccessToken";
+import { decodeAccessToken, clearAccessToken } from "../../util/decodeAccessToken";
 import { useNavigate } from "react-router-dom";
 import { UserInfo } from "../../interfaces/user";
 import Header from "../../components/header/header";
