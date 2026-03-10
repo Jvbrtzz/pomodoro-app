@@ -74,7 +74,7 @@ async function createUser(nome: string, email: string,  senha: string, user_type
 
 }
 
-async function fetchAllUsers( accessToken: string ): Promise<UsersList | void> {
+async function fetchAllUsers( accessToken: string ): Promise<UsersList[] | void> {
   try {
     const api = await getApiInstance();
     const resultapi = await api.get(
@@ -86,7 +86,7 @@ async function fetchAllUsers( accessToken: string ): Promise<UsersList | void> {
       }
     );
 
-    return resultapi.data.users as UsersList;
+    return resultapi.data.users as UsersList[];
 
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -102,26 +102,30 @@ async function fetchAllUsers( accessToken: string ): Promise<UsersList | void> {
   }
 }
 
-async function fetchSearchResults(searchTerm: string, accessToken: UserLoginData): Promise<string | void> {
-    try {
-      const api = await getApiInstance();
-      const resultapi = await api.get(
-        `auth/search?term=${searchTerm}`,
-        {
-          headers: {
-              Authorization: `Bearer ${accessToken}`
-            }
-        }
-      );
-      if (resultapi.status === 200) {
-          return resultapi.data as string;
-        } else {
-          console.error('Error fetching search results:', resultapi.statusText);
-        }
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : String(error);
-        console.error('Error fetching search results:', errorMessage);
+async function fetchSearchResults(searchTerm: string, accessToken: string): Promise<UsersList[] | void> {
+  try {
+    const api = await getApiInstance();
+    const resultapi = await api.post(
+      "auth/searchusers",
+      { term: searchTerm },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       }
+    );
+
+    if (resultapi.status === 200) {
+      return (resultapi.data?.users ?? []) as UsersList[];
+    } else {
+      console.error("Error fetching search results:", resultapi.statusText);
+      return [];
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error("Error fetching search results:", errorMessage);
+    return [];
+  }
 };
 
 export { fetchUser, createUser, fetchAllUsers, fetchSearchResults };
