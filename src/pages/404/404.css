@@ -1,0 +1,48 @@
+.page-error {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 20rem;
+    box-sizing: border-box;
+    background:
+        radial-gradient(circle at top, rgba(251, 191, 36, 0.24), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(249, 115, 22, 0.18), transparent 32%),
+        linear-gradient(135deg, #fff7ed 0%, #ffedd5 46%, #fed7aa 100%);
+    color: #431407;
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    text-align: center;
+}
+
+.page-error h1 {
+    margin: 0;
+    font-size: clamp(4.5rem, 16vw, 9rem);
+    line-height: 0.9;
+    font-weight: 900;
+    letter-spacing: -0.08em;
+    color: #9a3412;
+    text-shadow: 0 10px 30px rgba(194, 65, 12, 0.16);
+}
+
+.page-error p {
+    margin: 1rem 0 0;
+    padding: 1rem 1.5rem;
+    max-width: 28rem;
+    /* border: 1px solid rgba(154, 52, 18, 0.14);
+    border-radius: 1.25rem;
+    background: rgba(255, 255, 255, 0.58); */
+    backdrop-filter: blur(10px);
+    font-size: clamp(1rem, 2.8vw, 1.35rem);
+    font-weight: 600;
+    line-height: 1.5;
+    /* box-shadow: 0 20px 45px rgba(124, 45, 18, 0.12); */
+}
+
+@media (max-width: 640px) {
+    .page-error {
+        padding: 1.5rem;
+    }
+
+    .page-error p {
+        padding: 0.9rem 1rem;
+    }
+}

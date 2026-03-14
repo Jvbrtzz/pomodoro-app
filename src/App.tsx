@@ -3,6 +3,7 @@ import { Login } from './pages/login/login'
 import Admin from './pages/admin/admin'
 import { Route, Routes, Navigate } from 'react-router-dom'
 import { Register } from './pages/register/register'
+import { PageError }from './pages/404/404'
 
 function App() {
   return (
@@ -17,7 +18,6 @@ function App() {
         path="/login"
         element={<Login />}
       />
-
             
       <Route
         path="/admin"
@@ -27,11 +27,15 @@ function App() {
       <Route
         path="/register"
         element={<Register />}
+      />      
+      
+      <Route
+        path="/404"
+        element={<PageError />}
       />
 
-      <Route path="*" element={<Navigate to="/login" />} />
-    </Routes>
-    
+      <Route path="*" element={<Navigate to="/404" />} />
+    </Routes>    
     </>
   )
 }
