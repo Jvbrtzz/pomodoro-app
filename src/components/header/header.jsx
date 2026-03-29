@@ -1,5 +1,5 @@
 import "./header.css";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import Button from "../button/button";
 
 export default function Header({

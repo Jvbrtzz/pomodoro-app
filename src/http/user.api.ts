@@ -19,11 +19,16 @@ async function fetchUser(email: string, senha: string): Promise<UserLoginData | 
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 401) {
         throw new Error("Failed to fetch User");
-      } else {
-        console.error(error.response?.data.error);
+      } else {        
+        const errorText = "Erro inesperado, tente novamente mais tarde"
         let err = JSON.stringify(error.response?.data.error);
-        let errSemAspas = err.replaceAll('"', '');
-        throw new Error(errSemAspas || "Erro inesperado, tente novamente mais tarde");
+        if (err !== undefined) {
+          let errSemAspas = err.replaceAll('"', '');
+          console.error(errSemAspas || errorText);
+          throw new Error(errSemAspas || errorText);
+        }
+        console.error(err || errorText);
+        throw new Error(err || "Erro inesperado, tente novamente mais tarde");
       }
     } else {
       console.error(error);
@@ -69,7 +74,7 @@ async function createUser(nome: string, email: string,  senha: string, user_type
 
 }
 
-async function fetchAllUsers( accessToken: string ): Promise<UsersList | void> {
+async function fetchAllUsers( accessToken: string ): Promise<UsersList[] | void> {
   try {
     const api = await getApiInstance();
     const resultapi = await api.get(
@@ -81,7 +86,7 @@ async function fetchAllUsers( accessToken: string ): Promise<UsersList | void> {
       }
     );
 
-    return resultapi.data.users as UsersList;
+    return resultapi.data.users as UsersList[];
 
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -97,4 +102,30 @@ async function fetchAllUsers( accessToken: string ): Promise<UsersList | void> {
   }
 }
 
-export { fetchUser, createUser, fetchAllUsers };
+async function fetchSearchResults(searchTerm: string, accessToken: string): Promise<UsersList[] | void> {
+  try {
+    const api = await getApiInstance();
+    const resultapi = await api.post(
+      "auth/searchusers",
+      { term: searchTerm },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    if (resultapi.status === 200) {
+      return (resultapi.data?.users ?? []) as UsersList[];
+    } else {
+      console.error("Error fetching search results:", resultapi.statusText);
+      return [];
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error("Error fetching search results:", errorMessage);
+    return [];
+  }
+};
+
+export { fetchUser, createUser, fetchAllUsers, fetchSearchResults };

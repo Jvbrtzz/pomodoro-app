@@ -1,4 +1,3 @@
-import Button from "../../components/button/button";
 import { useEffect, useState } from "react";
 import "./admin.css";
 import UserList from "../../components/User";
@@ -22,7 +21,7 @@ function Admin() {
             navigate('/login')
             return
         }
-        else if(decoded.user_type == 'user'){
+        else if(decoded.user_type === 'user'){
             navigate('/login?motivo=Acesso_negado')
             return
         }
